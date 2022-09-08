@@ -59,6 +59,7 @@
 (defn point-list []
   (let [game @(re-frame/subscribe [::subs/game])]
     [:form
+     [:pre (str game)]
      ;;TODO switch to cssgrid or flexbox
      [:table
       [:thead (stich-header)]
@@ -69,7 +70,10 @@
        (points {:round 1})
        (announce-editor {:round 2 :num-players 3})
       ;;TODO verbleibende runden
-       ]]]))
+       ]]
+     [:button {:type "submit"
+               :on-click #((.preventDefault %1)
+                           (re-frame/dispatch [::events/start-prediction-phase ]))} "Neue Runde"]]))
 
 ;; ################# GAME SETTINGS #############
 (defn player-name-edit-field [idx player-name]
