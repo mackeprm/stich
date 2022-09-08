@@ -9,12 +9,18 @@
  (fn [_ _]
    db/default-db))
 
+(defn calculate-round-labels [max-cards]
+  (let [cardseq (range 1 (inc max-cards))]
+    (into [] (map str (flatten [cardseq (reverse cardseq)])))))
+
 ;;TODO back button navigation (spiel abbrechen)
 ;;TODO game arrays anlegen: announce, actual?
+;; Set Round Labels
 (re-frame/reg-event-db
  ::start-game
  (fn [db _]
    (-> db
+       (assoc-in [:game :round-labels] (calculate-round-labels (get-in db [:game-settings :max-cards])))
        (assoc-in [:game-settings :player-names] (subvec (get-in db [:game-settings :player-names-tmp])
                                                         0
                                                         (get-in db [:game-settings :num-players])))

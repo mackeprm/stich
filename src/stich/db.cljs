@@ -2,6 +2,7 @@
 
 (def default-db {:game-state :initial
                  :game {:round 0
+                        :round-labels ["1" "2" "3" "3" "2" "1"]
                         :rounds [{:announced [1 0 1]
                                   :actual    [0 0 1]}
                                  {:announced [2 0 1]

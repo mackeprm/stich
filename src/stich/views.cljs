@@ -59,8 +59,10 @@
 (defn point-list []
   (let [game @(re-frame/subscribe [::subs/game])]
     [:form
+     ;;TODO switch to cssgrid or flexbox
      [:table
       [:thead (stich-header)]
+      ;;TODO round labels
       [:tbody
        (announced {:round 1 :announced (:announced (get (:rounds game) 0))})
        (actual {:round 1 :actual (:actual (get (:rounds game) 0))})
@@ -71,7 +73,7 @@
 
 ;; ################# GAME SETTINGS #############
 (defn player-name-edit-field [idx player-name]
-  [:div
+  [:div {:key (str "player-input-" idx)}
    [:input {:type "text"
             :value (str player-name)
             :on-change #(re-frame/dispatch [::events/change-player-name (-> % .-target .-value) idx])}]])
